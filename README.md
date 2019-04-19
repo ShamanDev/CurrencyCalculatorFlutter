@@ -1,16 +1,11 @@
-# currencycounter
+# CurrencyCalculator
 
-A new Flutter project.
+A currency calculator made using Flutter
 
-## Getting Started
+## Description
 
-This project is a starting point for a Flutter application.
+I made this app as a one-day project. I created it beacuse i talk with foreigners alot, and when our talks get to money or prices, i always convert PLN's to their currency so they will always have a better view of how much something costs
 
-A few resources to get you started if this is your first Flutter project:
+### Download
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+TODO
