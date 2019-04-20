@@ -15,6 +15,7 @@ class MainState extends State<MainScreen>{
     return Scaffold(
       body:Stack(
         children: <Widget>[
+
           //Background stuff start
           Container(
             decoration: BoxDecoration(
@@ -33,29 +34,37 @@ class MainState extends State<MainScreen>{
             ),
           ),
           //Background stuff end
+
           Center(
             child: Container(
               height: 350,
               width: 250,
               decoration: BoxDecoration(
-                color: Colors.black54,
+                color: Colors.black87,
                 borderRadius: BorderRadius.circular(6.0)
               ),
-              child: Row(
+              child: ListView(
                 children: <Widget>[
-                  TextField(
+                  Padding(
+                  padding: EdgeInsets.only(top: 25),
+                  child:TextField(
+                    keyboardType: TextInputType.number,
+                    style: TextStyle(height: 0.3, fontSize: 18.0, color: Colors.white),
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-                      fillColor: Colors.white
+                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0), borderSide: BorderSide(color: Colors.red)),
+                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0), borderSide: BorderSide(color: Colors.white)),
+                      labelText: 'Amount',
+                      labelStyle: TextStyle(color: Colors.red),
+                      suffixText: "PLN",
+                      suffixStyle: TextStyle(color: Colors.white)
                     ),
                     controller: amountcontroller,
                     onChanged: (text) {
                       debugPrint(amountcontroller.text);
                     },
-                  ),
-
+                  )),
                 ],
-              ),
+              )
             ),
           )
         
