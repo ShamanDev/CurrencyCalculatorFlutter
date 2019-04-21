@@ -108,7 +108,7 @@ class MainState extends State<MainScreen>{
 
               Padding(
                 padding: EdgeInsets.only(top:180, left: 109),
-                child:Text("To", style: TextStyle(color: Colors.white),),
+                child:Text("To", style: TextStyle(color: Colors.white, fontFamily: 'Merriweather'),),
               ),
 
 
@@ -137,10 +137,10 @@ class MainState extends State<MainScreen>{
                   child: RaisedButton(
                     color: Colors.red,
                     textColor: Colors.white,
-                    child: Text("Calculate", textScaleFactor: 1.4,),
+                    child: Text("Calculate", textScaleFactor: 1.4),
                     onPressed: (){
                       setState(() {
-                       return calculate(amountcontroller.text, _from, _to);
+                       return calculateandshow(context,amountcontroller.text, _from, _to);
                       });
                     },
                   ),
@@ -154,7 +154,7 @@ class MainState extends State<MainScreen>{
     );
   }
 
-  void calculate(amount,from,to) async{
+  void calculateandshow(BuildContext context,amount,from,to) async{
 
     String url = 'https://api.exchangeratesapi.io/latest?symbols='+'$to'+'&base='+'$from';
     final _response = await http.get(url);
@@ -164,9 +164,16 @@ class MainState extends State<MainScreen>{
     double _amounttodouble = double.parse('$amount');
     double _finalcalculation = _amounttodouble*_rate;
 
-    print(_finalcalculation.round());
+    var _message = '$amount'+' '+ '$from' + ' => '+ '$_finalcalculation' + ' $to ';
 
-    return null;
+    var alertDialog = AlertDialog(
+      title: Text("Calculated succesfully"),
+      content: Text(_message),
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => alertDialog
+    );
   }
 }
-
