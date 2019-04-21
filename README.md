@@ -4,7 +4,7 @@ A currency calculator made using Flutter
 
 ## Description
 
-I made this app as a one-day project. I created it beacuse i talk with foreigners alot, and when our talks get to money or prices, i always convert PLN's to their currency so they will always have a better view of how much something costs
+I used https://exchangeratesapi.io/(https://github.com/exchangeratesapi/exchangeratesapi) for this app, i recommend this API to everyone .My motivation for creating it beacuse i talk with foreigners alot, and when we talk about stuff like money or prices, i always convert my country's currency to their one so they will always have a better view of how much something costs. 
 
 ### Download
 
