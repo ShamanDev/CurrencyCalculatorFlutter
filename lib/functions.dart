@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -75,12 +74,11 @@ class MainState extends State<MainScreen>{
                     ),
                     controller: amountcontroller,
                     onChanged: (text) {
-                      debugPrint(amountcontroller.text);
                     },
                   )),
                 //Amount input finish
               Padding(
-                padding: EdgeInsets.only(top:110, left: 99),
+                padding: EdgeInsets.only(top:100, left: 99),
                 child:Text("From", style: TextStyle(color: Colors.white),),
               ),
 
@@ -90,7 +88,7 @@ class MainState extends State<MainScreen>{
                 items:_currenciesnames.map((String value){
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value),
+                    child: Text(value, style: TextStyle(color: Colors.white),),
 
                   );
                 }).toList(),
@@ -98,13 +96,14 @@ class MainState extends State<MainScreen>{
                 onChanged: (String value){
                   setState(() {
                     this._from = _currencieswithshortcuts[value];
-                    debugPrint(this._from);
                   });
                 },
 
                 value: _shortcutswithcurrencies[_from],
 
-              )),
+              )
+              
+              ),
 
 
               Padding(
@@ -119,7 +118,7 @@ class MainState extends State<MainScreen>{
                 items:_currenciesnames.map((String value){
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value),
+                    child: Text(value, style: TextStyle(color: Colors.white),),
 
                   );
                 }).toList(),
@@ -127,7 +126,6 @@ class MainState extends State<MainScreen>{
                 onChanged: (String value){
                   setState(() {
                     this._to = _currencieswithshortcuts[value];
-                    debugPrint(this._to);
                   });
                 },
 
@@ -155,14 +153,20 @@ class MainState extends State<MainScreen>{
       ])
     );
   }
+
   void calculate(amount,from,to) async{
+
     String url = 'https://api.exchangeratesapi.io/latest?symbols='+'$to'+'&base='+'$from';
-    double _amounttodouble = double.parse('$amount');
     final _response = await http.get(url);
-    
-    var _rate = json.decode(_response.body);
-    print(_rate);
+    var _responsebody = json.decode(_response.body);
+    double _rate = _responsebody['rates']['$to'];
+
+    double _amounttodouble = double.parse('$amount');
+    double _finalcalculation = _amounttodouble*_rate;
+
+    print(_finalcalculation.round());
 
     return null;
   }
 }
+
