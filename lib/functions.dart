@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 
 
 class MainScreen extends StatefulWidget{
@@ -9,6 +13,7 @@ class MainScreen extends StatefulWidget{
 class MainState extends State<MainScreen>{
   TextEditingController amountcontroller = TextEditingController();
   static var _currencieswithshortcuts = {'Bulgarian Lev':'BGN', 'New Zeland Dollar':'NZD', 'Israeli New Shekel':'ILS', 'Russian Ruble':'RUB', 'Canadian Dollar':'CAD', 'American Dollar':'USD', 'Philippine Peso':'PHP', 'Swiss Franc': 'CHF', 'South African Rand':'ZAR', 'Australian Dollar':'AUD', 'Japanese Yen':'JPY', 'Turkish Lira':'TRY', 'Hong Kong Dollar':'HKD', 'Malaysian Ringgit':'MYR', 'Thai Baht':'THB', 'Croatian Kuna':'HRK', 'Norwegian Krone':'NOK', 'Indonesian Rupiah':'IDR', 'Danish Krone':'DKK', 'Czech Koruna':'CZK', 'Hungarian Forint':'HUF', 'British Pound Sterling':'GBP', 'Mexican Peso': 'MXN', 'South Korean Won':'KRW', 'Icelandic Króna': 'ISK', 'Singapore Dollar': 'SGD', 'Brazilian Real': 'BRL', 'Poland Złoty':'PLN', 'Indian Rupee':'INR', 'Romanian Leu':'RON', 'Chinese Yuan':'CNY', 'Swedish Krona':'SEK', 'Euro':'EUR'};
+  static var _shortcutswithcurrencies = {'BGN': 'Bulgarian Lev', 'NZD': 'New Zeland Dollar', 'ILS': 'Israeli New Shekel', 'RUB': 'Russian Ruble', 'CAD': 'Canadian Dollar', 'USD': 'American Dollar', 'PHP': 'Philippine Peso', 'CHF': 'Swiss Franc', 'ZAR': 'South African Rand', 'AUD': 'Australian Dollar', 'JPY': 'Japanese Yen', 'TRY': 'Turkish Lira', 'HKD': 'Hong Kong Dollar', 'MYR': 'Malaysian Ringgit', 'THB': 'Thai Baht', 'HRK': 'Croatian Kuna', 'NOK': 'Norwegian Krone', 'IDR': 'Indonesian Rupiah', 'DKK': 'Danish Krone', 'CZK': 'Czech Koruna', 'HUF': 'Hungarian Forint', 'GBP': 'British Pound Sterling', 'MXN': 'Mexican Peso', 'KRW': 'South Korean Won', 'ISK': 'Icelandic Króna', 'SGD': 'Singapore Dollar', 'BRL': 'Brazilian Real', 'PLN': 'Poland Złoty', 'INR': 'Indian Rupee', 'RON': 'Romanian Leu', 'CNY': 'Chinese Yuan', 'SEK': 'Swedish Krona', 'EUR': 'Euro'};
   static var _currenciesnames = _currencieswithshortcuts.keys;
   var _from = 'EUR';
   var _to = 'USD';
@@ -97,7 +102,7 @@ class MainState extends State<MainScreen>{
                   });
                 },
 
-                value: _currencieswithshortcuts[_from],
+                value: _shortcutswithcurrencies[_from],
 
               )),
 
@@ -126,10 +131,22 @@ class MainState extends State<MainScreen>{
                   });
                 },
 
-                value: _currencieswithshortcuts[_to],
+                value: _shortcutswithcurrencies[_to],
 
               )),
-  
+              Padding(
+                padding: EdgeInsets.only(top: 260, left:65),
+                  child: RaisedButton(
+                    color: Colors.red,
+                    textColor: Colors.white,
+                    child: Text("Calculate", textScaleFactor: 1.4,),
+                    onPressed: (){
+                      setState(() {
+                       return calculate(amountcontroller.text, _from, _to);
+                      });
+                    },
+                  ),
+                ),
                 ],
               )
             ),
@@ -137,5 +154,15 @@ class MainState extends State<MainScreen>{
         
       ])
     );
+  }
+  void calculate(amount,from,to) async{
+    String url = 'https://api.exchangeratesapi.io/latest?symbols='+'$to'+'&base='+'$from';
+    double _amounttodouble = double.parse('$amount');
+    final _response = await http.get(url);
+    
+    var _rate = json.decode(_response.body);
+    print(_rate);
+
+    return null;
   }
 }
