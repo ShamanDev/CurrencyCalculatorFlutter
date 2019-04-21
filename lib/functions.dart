@@ -63,7 +63,7 @@ class MainState extends State<MainScreen>{
                   padding: EdgeInsets.only(top: 25,left: 5, right: 5),
                   child:TextField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(height: 0.3, fontSize: 18.0, color: Colors.white),
+                    style: TextStyle(fontSize: 18.0, color: Colors.white),
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0), borderSide: BorderSide(color: Colors.red)),
                       enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0), borderSide: BorderSide(color: Colors.white)),
@@ -84,13 +84,16 @@ class MainState extends State<MainScreen>{
 
               Padding(
               padding: EdgeInsets.only(top: 120, left: 35),
-              child:DropdownButton<String>(
+              child:Theme(
+                data: Theme.of(context).copyWith(
+                  canvasColor: Colors.black
+                ),
+                child:DropdownButton<String>(
                 items:_currenciesnames.map((String value){
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value, style: TextStyle(color: Colors.white),),
-
-                  );
+                    child:Text(value, style: TextStyle(color: Colors.white),),
+                    );
                 }).toList(),
               
                 onChanged: (String value){
@@ -100,10 +103,8 @@ class MainState extends State<MainScreen>{
                 },
 
                 value: _shortcutswithcurrencies[_from],
-
-              )
               
-              ),
+              ))),
 
 
               Padding(
@@ -114,13 +115,16 @@ class MainState extends State<MainScreen>{
 
               Padding(
               padding: EdgeInsets.only(top: 200, left: 35),
-              child:DropdownButton<String>(
+              child:Theme(
+                data: Theme.of(context).copyWith(
+                  canvasColor: Colors.black
+                ),
+                child:DropdownButton<String>(
                 items:_currenciesnames.map((String value){
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value, style: TextStyle(color: Colors.white),),
-
-                  );
+                    child:Text(value, style: TextStyle(color: Colors.white),),
+                    );
                 }).toList(),
               
                 onChanged: (String value){
@@ -130,8 +134,8 @@ class MainState extends State<MainScreen>{
                 },
 
                 value: _shortcutswithcurrencies[_to],
-
-              )),
+              
+              ))),
               Padding(
                 padding: EdgeInsets.only(top: 260, left:65),
                   child: RaisedButton(
@@ -162,12 +166,13 @@ class MainState extends State<MainScreen>{
     double _rate = _responsebody['rates']['$to'];
 
     double _amounttodouble = double.parse('$amount');
-    double _finalcalculation = _amounttodouble*_rate;
+    var _finalcalculation = _amounttodouble*_rate; // Remember to convert it to double for further calculations
+    _finalcalculation = _finalcalculation.toStringAsPrecision(2)
 
     var _message = '$amount'+' '+ '$from' + ' => '+ '$_finalcalculation' + ' $to ';
 
     var alertDialog = AlertDialog(
-      title: Text("Calculated succesfully"),
+      title: Text("Calculated succesfully", style: TextStyle(fontSize: 10.0),),
       content: Text(_message),
     );
 
