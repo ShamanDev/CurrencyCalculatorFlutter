@@ -167,9 +167,9 @@ class MainState extends State<MainScreen>{
 
     double _amounttodouble = double.parse('$amount');
     var _finalcalculation = _amounttodouble*_rate; // Remember to convert it to double for further calculations
-    _finalcalculation = _finalcalculation.toStringAsPrecision(2)
+    var _finalcalculationwithprecision = _finalcalculation.toStringAsFixed(2);
 
-    var _message = '$amount'+' '+ '$from' + ' => '+ '$_finalcalculation' + ' $to ';
+    var _message = '$amount'+' '+ '$from' + ' => '+ '$_finalcalculationwithprecision' + ' $to ';
 
     var alertDialog = AlertDialog(
       title: Text("Calculated succesfully", style: TextStyle(fontSize: 10.0),),
